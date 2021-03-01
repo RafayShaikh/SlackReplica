@@ -13,9 +13,11 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import InsertCommentIcon from '@material-ui/icons/InsertComment';
-import { db } from '../firebase';
+import { auth, db } from '../firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 function Sidebar() {
+  const [user] = useAuthState(auth);
   const [channels, loading, error] = useCollection(db.collection('rooms'));
   return (
     <SidebarContainer>
@@ -24,7 +26,7 @@ function Sidebar() {
           <h2> HQ</h2>
           <h3>
             <FiberManualRecordIcon />
-            Rafay Shaikh
+            {user.displayName}
           </h3>
         </SidebarInfo>
         <CreateIcon />
